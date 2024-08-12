@@ -1,19 +1,21 @@
-package com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.menu.impl;
+package com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.menu.impl;
 
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.config.ApplicationContext;
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.menu.Menu;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.config.ApplicationContext;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.menu.Menu;
 
 public class SettingsMenu implements Menu {
 
-	private static final String SETTINGS = "1. Change Password" + System.lineSeparator()
-			+ "2. Change Email";
+	private static final String SETTINGS = "1. Change Password" + System.lineSeparator() + "2. Change Email";
 
 	private ApplicationContext context;
+	private ResourceBundle bundle;
 
 	{
 		context = ApplicationContext.getInstance();
+		bundle = context.getBundle();
 	}
 
 	@Override
@@ -22,14 +24,12 @@ public class SettingsMenu implements Menu {
 		mainLoop: while (true) {
 			printMenuHeader();
 			if (context.getLoggedInUser() == null) {
-				System.out.println(
-						"Please, log in or create new account to change your account settings");
+				System.out.println(bundle.getString("not_logged_in_my_settings_error_message"));
 				new MainMenu().start();
 				return;
 			} else {
 				System.out.println(SETTINGS);
-				System.out.print(
-						"Please, enter option or type 'menu' to navigate back to the main menu: ");
+				System.out.print(bundle.getString("my_settings_instructions"));
 				Scanner sc = new Scanner(System.in);
 				String userInput = sc.next();
 
@@ -47,7 +47,7 @@ public class SettingsMenu implements Menu {
 					menuToNavigate = new ChangeEmailMenu();
 					break mainLoop;
 				default:
-					System.out.println("Only 1, 2 is allowed. Try one more time");
+					System.out.println(bundle.getString("invalid_input_my_settings_error_message"));
 					continue;
 				}
 			}
@@ -59,7 +59,7 @@ public class SettingsMenu implements Menu {
 
 	@Override
 	public void printMenuHeader() {
-		System.out.println("***** SETTINGS *****");		
+		System.out.println(bundle.getString("my_settings_header"));
 	}
 
 }

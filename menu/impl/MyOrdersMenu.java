@@ -1,19 +1,24 @@
-package com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.menu.impl;
+package com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.menu.impl;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+import java.util.ResourceBundle;
 
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.config.ApplicationContext;
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.enteties.Order;
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.menu.Menu;
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.services.OrderManagementService;
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.services.impl.DefaultOrderManagementService;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.config.ApplicationContext;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.entities.Order;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.menu.Menu;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.services.OrderManagementService;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.services.impl.DefaultOrderManagementService;
 
 public class MyOrdersMenu implements Menu {
 
 	private ApplicationContext context;
 	private OrderManagementService orderManagementService;
+	private ResourceBundle bundle;
 
 	{
+		context = ApplicationContext.getInstance();
+		bundle = context.getBundle();
 		context = ApplicationContext.getInstance();
 		orderManagementService = DefaultOrderManagementService.getInstance();
 	}
@@ -22,14 +27,13 @@ public class MyOrdersMenu implements Menu {
 	public void start() {
 		printMenuHeader();
 		if (context.getLoggedInUser() == null) {
-			System.out.println(
-					"Please, log in or create new account to see list of your orders");
+			System.out.println(bundle.getString("not_logged_in_my_orders_error_message"));
 			new MainMenu().start();
 			return;
 		} else {
 			printUserOrdersToConsole();
 		}
-		new MainMenu().start();
+		context.getMainMenu().start();
 	}
 
 	private void printUserOrdersToConsole() {
@@ -37,9 +41,7 @@ public class MyOrdersMenu implements Menu {
 				.getOrdersByUserId(context.getLoggedInUser().getId());
 
 		if (loggedInUserOrders == null || loggedInUserOrders.size() == 0) {
-			System.out.println(
-					"Unfortunately, you don't have any orders yet. "
-					+ "Navigate back to main menu to place a new order");
+			System.out.println(bundle.getString("no_orders_error_message"));
 		} else {
 			for (Order order : loggedInUserOrders) {
 				System.out.println(order);
@@ -49,7 +51,7 @@ public class MyOrdersMenu implements Menu {
 
 	@Override
 	public void printMenuHeader() {
-		System.out.println("***** MY ORDERS *****");		
+		System.out.println(bundle.getString("my_orders_header"));
 	}
 
 }

@@ -1,17 +1,19 @@
-package com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.services.impl;
+package com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.services.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.enteties.Product;
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.enteties.impl.DefaultProduct;
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.services.ProductManagementService;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.entities.Product;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.entities.impl.DefaultProduct;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.services.ProductManagementService;
+
 
 public class DefaultProductManagementService implements ProductManagementService {
 	
 	private static DefaultProductManagementService instance;
 	
-	private static ArrayList<Product> products;
+	private static List<Product> products;
 	
 	static {
 		initProducts();
@@ -45,17 +47,12 @@ public class DefaultProductManagementService implements ProductManagementService
 
 	@Override
 	public ArrayList<Product> getProducts() {
-		return products;
+		return (ArrayList<Product>) products;
 	}
 
 	@Override
 	public Product getProductById(int productIdToAddToCart) {
-		for (Product product : products) {
-			if (product != null && product.getId() == productIdToAddToCart) {
-				return product;
-			}
-		}
-		return null;
+		return products.stream().filter(product -> product.getId() == productIdToAddToCart).findFirst().orElse(null);
 	}
 
 }

@@ -1,16 +1,21 @@
-package com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.menu.impl;
+package com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.menu.impl;
 
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.config.ApplicationContext;
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.menu.Menu;
+import java.util.ResourceBundle;
+
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.config.ApplicationContext;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.menu.Menu;
 
 public class SignOutMenu implements Menu {
 
 	private ApplicationContext context;
-	
+	private ResourceBundle bundle;
+
 	{
 		context = ApplicationContext.getInstance();
+		bundle = context.getBundle();
+		context = ApplicationContext.getInstance();
 	}
-	
+
 	@Override
 	public void start() {
 		printMenuHeader();
@@ -20,8 +25,8 @@ public class SignOutMenu implements Menu {
 
 	@Override
 	public void printMenuHeader() {
-		System.out.println("***** Sign Out *****");
-		System.out.println("Have a nice day! Look forward to welcoming back!");		
+		System.out.println(bundle.getString("sign_out_header"));
+		System.out.println(bundle.getString("see_you_later"));
 	}
 
 }

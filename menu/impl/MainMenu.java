@@ -1,53 +1,46 @@
-package com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.menu.impl;
+package com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.menu.impl;
 
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.Main;
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.config.ApplicationContext;
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.menu.Menu;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.Main;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.config.ApplicationContext;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.menu.Menu;
+
 
 public class MainMenu implements Menu {
 
-	public static final String MENU_COMMAND = "menu";
+	public static String MENU_COMMAND;
 	
-	private static final String MAIN_MENU_TEXT_FOR_LOGGED_OUT_USER = "Please, enter number in console to proceed." + System.lineSeparator()
-			+ "1. Sign Up" + System.lineSeparator() + "2. Sign In"
-			+ System.lineSeparator() + "3. Product Catalog" + System.lineSeparator()
-			+ "4. My Orders" + System.lineSeparator() + "5. Settings" + System.lineSeparator() + 
-			"6. Customer List";
-
-	private static final String MAIN_MENU_TEXT_FOR_LOGGED_IN_USER = "Please, enter number in console to proceed." + System.lineSeparator()
-			+ "1. Sign Up" + System.lineSeparator() + "2. Sign Out"
-			+ System.lineSeparator() + "3. Product Catalog" + System.lineSeparator()
-			+ "4. My Orders" + System.lineSeparator() + "5. Settings" + System.lineSeparator() + 
-			"6. Customer List";;
-
 	private ApplicationContext context;
+	private ResourceBundle bundle;
 	
 	{
 		context = ApplicationContext.getInstance();
 	}
-	
+
 	@Override
 	public void start() {
+		context.updateLanguage();
+		bundle = context.getBundle();
+		MENU_COMMAND = bundle.getString("exit_command");
 		if (context.getMainMenu() == null) {
 			context.setMainMenu(this);
 		}
-		
+
 		Menu menuToNavigate = null;
 		mainLoop: while (true) {
 			printMenuHeader();
-			
-			Scanner sc = new Scanner(System.in);
 
-			System.out.print("User input: ");
+			Scanner sc = new Scanner(System.in);
+			
+			System.out.print(bundle.getString("user_input"));
 			String userInput = sc.next();
-			if (userInput.equalsIgnoreCase(Main.EXIT_COMMAND)) {
-				System.exit(0);
-			} else {
+			
+			if (userInput.equalsIgnoreCase(Main.EXIT_COMMAND)) System.exit(0);
+			else {
 				int commandNumber = Integer.parseInt(userInput);
 				switch (commandNumber) {
-				
 				case 1:
 					menuToNavigate = new SignUpMenu();
 					break mainLoop;
@@ -70,24 +63,29 @@ public class MainMenu implements Menu {
 				case 6:
 					menuToNavigate = new CustomerListMenu();
 					break mainLoop;
+				case 7:
+					menuToNavigate = new ResetPasswordMenu();
+					break mainLoop;
+				case 8:
+					menuToNavigate = new ChangeLanguageMenu();
+					break mainLoop;
 				default:
-					System.out.println("Only 1, 2, 3, 4, 5 is allowed. Try one more time");
+					System.out.println(bundle.getString("wrong_main_menu_input_message"));
 					continue; // continue endless loop
 				}
 			}
 		}
-		
+
 		menuToNavigate.start();
-		
 	}
 
 	@Override
 	public void printMenuHeader() {
-		System.out.println("***** MAIN MENU *****");
+		System.out.println(bundle.getString("main_menu_header"));
 		if (context.getLoggedInUser() == null) {
-			System.out.println(MAIN_MENU_TEXT_FOR_LOGGED_OUT_USER);
+			System.out.println(bundle.getString("main_menu_text_for_logged_out_user"));
 		} else {
-			System.out.println(MAIN_MENU_TEXT_FOR_LOGGED_IN_USER);
+			System.out.println(bundle.getString("main_menu_text_for_logged_in_user"));
 		}
 	}
 

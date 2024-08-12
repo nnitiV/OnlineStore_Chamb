@@ -1,8 +1,7 @@
-package com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.menu;
+package com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.menu;
 
 public interface Menu {
-
 	void start();
-	
+
 	void printMenuHeader();
 }

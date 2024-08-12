@@ -1,22 +1,48 @@
-package com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.services.impl;
+package com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.services.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.enteties.Order;
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.services.OrderManagementService;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.entities.Order;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.services.OrderManagementService;
 
 public class DefaultOrderManagementService implements OrderManagementService {
 
-//	private static final int DEFAULT_ORDER_CAPACITY = 10;
-
 	private static DefaultOrderManagementService instance;
-//	private int lastIndex;
-	private ArrayList<Order> orders;
-	
+	private File database;
+	private List<Order> orders;
+
 	{
 		orders = new ArrayList<>();
+
+		database = new File("database", "orders.txt");
+		if (!database.exists()) {
+			try {
+				database.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			if(Files.size(database.toPath()) != 0) {
+				orders = deserializeObject(database.toPath());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
-	
+
 	public static OrderManagementService getInstance() {
 		if (instance == null) {
 			instance = new DefaultOrderManagementService();
@@ -29,39 +55,54 @@ public class DefaultOrderManagementService implements OrderManagementService {
 		if (order == null) {
 			return;
 		}
-		
+
 		orders.add(order);
+		serializeOrders(orders, database.toPath());
 	}
 
 	@Override
 	public ArrayList<Order> getOrdersByUserId(int userId) {
-		ArrayList<Order> userOrders = new ArrayList<>();
-		
-		for (Order order : orders) {
-			if (order != null && order.getCustomerId() == userId) {
-				userOrders.add(order);
-			}
-		}
-		
-		return userOrders;
+		return orders.stream().filter(order -> order != null).filter(order -> order.getCustomerId() == userId)
+				.collect(Collectors.toCollection(ArrayList<Order>::new));
 	}
 
 	@Override
 	public ArrayList<Order> getOrders() {
-		ArrayList<Order> nonNullOrders = new ArrayList<>();
-		
-//		int index = 0;
-		for (Order order : orders) {
-			if (order != null) {
-				nonNullOrders.add(order);
-			}
-		}
-		
-		return nonNullOrders;
+		return orders.stream().filter(order -> order != null).collect(Collectors.toCollection(ArrayList<Order>::new));
 	}
-	
+
 	void clearServiceState() {
 		orders = new ArrayList<Order>();
 	}
 
+	private void serializeOrders(List<Order> orders, Path pathName) {
+		try (var fileOutputStream = new FileOutputStream(pathName.toString());
+				var oos = new ObjectOutputStream(fileOutputStream)) {
+			oos.writeObject(orders);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List<Order> deserializeObject(Path pathName) {
+		List<Order> listOfOrdersDeserialized = new ArrayList<>();
+		
+	    try (var fileInputStream = new FileInputStream(pathName.toString());
+	         var ois = new ObjectInputStream(fileInputStream)) {
+	        // Check if file is empty
+	        if (fileInputStream.available() > 0) {
+	        	listOfOrdersDeserialized = (List<Order>) ois.readObject();
+	        }
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listOfOrdersDeserialized;
+	}
 }

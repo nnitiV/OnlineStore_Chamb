@@ -1,8 +1,9 @@
-package com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.services;
+package com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.services;
 
 import java.util.ArrayList;
 
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.enteties.Order;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.entities.Order;
+
 
 public interface OrderManagementService {
 

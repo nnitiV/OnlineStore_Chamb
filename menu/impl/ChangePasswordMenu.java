@@ -1,15 +1,19 @@
-package com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.menu.impl;
+package com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.menu.impl;
 
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.config.ApplicationContext;
-import com.itbulls.learnit.cunha.javacore.jfc.collection.list.hw.backendonlineshop.menu.Menu;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.config.ApplicationContext;
+import com.itbulls.learnit.cunha.javacore.examsection43.backendonlineshop.menu.Menu;
 
 public class ChangePasswordMenu implements Menu {
-	
+
 	private ApplicationContext context;
-	
+	private ResourceBundle bundle;
+
 	{
+		context = ApplicationContext.getInstance();
+		bundle = context.getBundle();
 		context = ApplicationContext.getInstance();
 	}
 
@@ -19,14 +23,14 @@ public class ChangePasswordMenu implements Menu {
 		Scanner sc = new Scanner(System.in);
 		String userInput = sc.next();
 		context.getLoggedInUser().setPassword(userInput);
-		System.out.println("Your password has been successfully changed");
-		new MainMenu().start();
+		System.out.println(bundle.getString("updated_password"));
+		context.getMainMenu().start();
 	}
 
 	@Override
 	public void printMenuHeader() {
-		System.out.println("***** CHANGE PASSWORD *****");
-		System.out.print("Enter new password: ");		
+		System.out.println(bundle.getString("change_password_header"));
+		System.out.print(bundle.getString("ask_new_password"));
 	}
 
 }
