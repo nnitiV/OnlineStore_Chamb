@@ -3,6 +3,7 @@ package com.itbulls.cunha.dto.converters;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itbulls.cunha.dto.RoleDTO;
@@ -12,6 +13,7 @@ import com.itbulls.cunha.entities.impl.DefaultRole;
 @Service
 public class RoleToRoleDtoConverter {
 
+	@Autowired
 	private PrivilegeDtoToPrivilegeConverter privilegeConverter;
 
 	public Role convertRoleDtoToRole(RoleDTO roleDTO) {

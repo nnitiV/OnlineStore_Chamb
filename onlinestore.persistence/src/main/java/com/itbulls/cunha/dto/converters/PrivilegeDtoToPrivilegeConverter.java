@@ -1,18 +1,21 @@
 package com.itbulls.cunha.dto.converters;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.itbulls.cunha.dto.PrivilegeDTO;
 import com.itbulls.cunha.entities.Privilege;
 import com.itbulls.cunha.entities.impl.DefaultPrivilege;
 
+@Service
 public class PrivilegeDtoToPrivilegeConverter {
 
+	@Autowired
 	private RoleToRoleDtoConverter roleConverter;
-
+	
 	public Privilege convertPrivilegeDtoToPrivilege(PrivilegeDTO privilegeDto) {
 		return new DefaultPrivilege(privilegeDto.getId(), privilegeDto.getPrivilegeName(),
 				roleConverter.converListRoleDtoToListRole(privilegeDto.getRoles()));

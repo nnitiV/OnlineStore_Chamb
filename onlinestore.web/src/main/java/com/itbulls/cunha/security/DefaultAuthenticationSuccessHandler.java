@@ -33,6 +33,7 @@ public class DefaultAuthenticationSuccessHandler implements AuthenticationSucces
 		HttpSession session = request.getSession();
 		String contextPath = request.getServletContext().getContextPath();
 		LOGGER.info("Session is requested");
+		
 		if (user != null) {
 			session.setAttribute(LOGGED_IN_USER_ATTR, user);
 			session.setAttribute(DefaultAuthenticationFailureHandler.UNSUCCESSFUL_LOGIN_COUNT_ATTR_KEY, null);

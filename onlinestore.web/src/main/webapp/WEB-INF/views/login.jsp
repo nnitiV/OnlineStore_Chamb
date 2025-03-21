@@ -29,23 +29,41 @@
 	display: flex;
 	align-items: center;
 	margin: 1vw 0;
-	align-items: center;
 }
 
 .remember-me-group label {
-	width: fit-content;
-	display: inline;
-	margin-left: -1vw;
+	cursor: pointer;
 }
 
-.remember-me-group input[type="checkbox"]:not(:checked),
-	.remember-me-group input[type="checkbox"]:checked {
-	opacity: 100%;
-	left: 0;
-	width: fit-content;
-	height: fit-content;
-	margin-bottom: .15vw;
-	position: relative;
+.remember-me-group input[type="checkbox"] {
+	opacity: 0; /* Esconde o checkbox padrão */
+	position: absolute;
+}
+
+.remember-me-group input[type="checkbox"]+label::before {
+	content: "";
+	display: inline-block;
+	width: 16px; /* Tamanho do checkbox personalizado */
+	height: 16px;
+	margin-right: 0.5vw;
+	border: 2px solid #ccc; /* Cor da borda */
+	border-radius: 4px; /* Bordas arredondadas */
+	background-color: white;
+	vertical-align: middle;
+}
+
+.remember-me-group input[type="checkbox"]:checked+label::before {
+	background-color: black; /* Cor de fundo quando marcado */
+	border-color: black; /* Cor da borda quando marcado */
+}
+
+.remember-me-group input[type="checkbox"]:checked+label::after {
+	content: "✔"; /* Ícone de check */
+	position: absolute;
+	left: 4px; /* Ajuste a posição do ícone */
+	top: 2px;
+	color: white; /* Cor do ícone */
+	font-size: 12px;
 }
 </style>
 <body>
@@ -68,7 +86,7 @@
 				</div>
 
 				<div class="remember-me-group">
-					<input type="checkbox" name="remember"> <label
+					<input type="checkbox" id="remember" name="remember"> <label
 						for="remember">Remember me</label>
 				</div>
 
@@ -76,7 +94,7 @@
 					<p style="color: red">${error}</p>
 				</c:if>
 				<button class="button_login">
-					<fmt:message key="sign.up" bundle="${resourceBundle}" />
+					<fmt:message key="login" bundle="${resourceBundle}" />
 				</button>
 			</form>
 			<p class="signup-link">

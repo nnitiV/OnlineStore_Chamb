@@ -22,7 +22,6 @@ public class DefaultAuthenticationProvider implements AuthenticationProvider {
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String username = authentication.getName();
 		String password = authentication.getCredentials().toString();
-		System.out.println("test authentication provider default");
 		UserDetails user = userDetailsService.loadUserByUsername(username);
 		if (user != null) {
 			if (isPasswordValid(password, user)) {
