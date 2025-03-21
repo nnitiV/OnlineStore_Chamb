@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.itbulls.cunha.dao.impl.MySqlJdbcCategoryDao;
+import com.itbulls.cunha.dao.impl.JpaCategoryDao;
 import com.itbulls.cunha.dto.ProductDTO;
 import com.itbulls.cunha.entities.Product;
 import com.itbulls.cunha.entities.impl.DefaultProduct;
@@ -22,7 +22,7 @@ public class ProductDtoToProductConverter {
 		ProductDTO productDTO = new ProductDTO();
 		productDTO.setId(product.getId());
 		productDTO.setProductName(product.getProductName());
-		productDTO.setCategory(new MySqlJdbcCategoryDao().getCategoryByName(product.getProductCategoryName()));
+		productDTO.setCategory(new JpaCategoryDao().getCategoryByName(product.getProductCategoryName()));
 		productDTO.setPrice(product.getPrice());
 		productDTO.setGuid(product.getProductGuid());
 		return productDTO;

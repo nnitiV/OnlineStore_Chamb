@@ -1,8 +1,8 @@
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="shop" tagdir="/WEB-INF/tags/shop/"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!-- Retrieve the locale from the session -->
 <c:set var="userLocale" value="${sessionScope.userLocale}" />
@@ -24,6 +24,30 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/login.css">
 </head>
+<style>
+.remember-me-group {
+	display: flex;
+	align-items: center;
+	margin: 1vw 0;
+	align-items: center;
+}
+
+.remember-me-group label {
+	width: fit-content;
+	display: inline;
+	margin-left: -1vw;
+}
+
+.remember-me-group input[type="checkbox"]:not(:checked),
+	.remember-me-group input[type="checkbox"]:checked {
+	opacity: 100%;
+	left: 0;
+	width: fit-content;
+	height: fit-content;
+	margin-bottom: .15vw;
+	position: relative;
+}
+</style>
 <body>
 	<shop:header />
 	<div class="background">
@@ -31,7 +55,7 @@
 			<h1>
 				<fmt:message key="welcome" bundle="${resourceBundle}" />
 			</h1>
-			<form action="login" method="POST">
+			<form action="perform_login" method="POST">
 				<div class="form-group">
 					<label for="email"><fmt:message key="email"
 							bundle="${resourceBundle}" /></label> <input type="email" id="email"
@@ -42,10 +66,16 @@
 							bundle="${resourceBundle}" /></label> <input type="password"
 						id="password" name="password" required>
 				</div>
+
+				<div class="remember-me-group">
+					<input type="checkbox" name="remember"> <label
+						for="remember">Remember me</label>
+				</div>
+
 				<c:if test="${error != null }">
 					<p style="color: red">${error}</p>
 				</c:if>
-				<button class="button_login" type="submit">
+				<button class="button_login">
 					<fmt:message key="sign.up" bundle="${resourceBundle}" />
 				</button>
 			</form>
@@ -60,6 +90,3 @@
 	<shop:js_main_import />
 </body>
 </html>
-
-
-Can you transform this jsp tags into spring form tags?

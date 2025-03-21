@@ -1,5 +1,8 @@
 package com.itbulls.cunha.entities.impl;
 
+import java.util.List;
+import java.util.Set;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -34,7 +37,8 @@ public class DefaultUser implements User {
 	private String credit_card_number, partnerCode;
 	private Double credit;
 	private User referralUser;
-	private Role role = new DefaultRole(2, "ROLE_CUSTOMER");
+	private Set<Role> roles;
+	private boolean isEnabled;
 
 	public DefaultUser() {
 	}
@@ -65,18 +69,18 @@ public class DefaultUser implements User {
 	}
 
 	public DefaultUser(int id, String firstName, String lastName, String password, String email,
-			String credit_card_number, Role role) {
+			String credit_card_number, Set<Role> roles) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
 		this.email = email;
 		this.credit_card_number = credit_card_number;
-		this.role = role;
+		this.roles = roles;
 	}
 
 	public DefaultUser(int id, String firstName, String lastName, String password, String email,
-			String credit_card_number, Role role, String partnerCode, User referralUser) {
+			String credit_card_number, Set<Role> roles, String partnerCode, User referralUser) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -85,11 +89,11 @@ public class DefaultUser implements User {
 		this.credit_card_number = credit_card_number;
 		this.partnerCode = partnerCode;
 		this.referralUser = referralUser;
-		this.role = role;
+		this.roles = roles;
 	}
 
 	public DefaultUser(int id, String firstName, String lastName, String password, String email,
-			String credit_card_number, Role role, String partnerCode, User referralUser, double credit) {
+			String credit_card_number, Set<Role> role, String partnerCode, User referralUser, double credit) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -100,7 +104,7 @@ public class DefaultUser implements User {
 		this.partnerCode = partnerCode;
 		this.credit = credit;
 		this.referralUser = referralUser;
-		this.role = role;
+		this.roles = role;
 	}
 
 	public int getId() {
@@ -159,20 +163,20 @@ public class DefaultUser implements User {
 		this.credit_card_number = credit_card_number;
 	}
 
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
 	public String getPartnerCode() {
 		return partnerCode;
 	}
 
 	public void setPartnerCode(String partnerCode) {
 		this.partnerCode = partnerCode;
+	}
+
+	public Double getCredit() {
+		return credit;
+	}
+
+	public void setCredit(Double credit) {
+		this.credit = credit;
 	}
 
 	public User getReferralUser() {
@@ -183,24 +187,36 @@ public class DefaultUser implements User {
 		this.referralUser = referralUser;
 	}
 
-	public double getCredit() {
-		return credit != null ? credit : 0.0;
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
-	public void setCredit(double credit) {
-		this.credit = credit;
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return this.isEnabled;
 	}
 
 	@Override
 	public String toString() {
-		return "DefaultUser [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", password="
-				+ password + ", email=" + email + ", credit_card_number=" + credit_card_number + ", partnerCode="
-				+ partnerCode + ", credit=" + credit + ", referralUser=" + referralUser + ", role=" + role + "]";
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", password=" + password
+				+ ", repeatPassword=" + repeatPassword + ", email=" + email + ", credit_card_number="
+				+ credit_card_number + ", partnerCode=" + partnerCode + ", credit=" + credit + ", referralUser="
+				+ referralUser + ", roles=" + roles + "]";
 	}
 
 	@Override
 	public void printUserWithoutPassword() {
-		System.out.println("DefaultUser [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
-				+ email + "]");
+		System.out.println("User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", credit_card_number=" + credit_card_number + ", partnerCode=" + partnerCode + ", credit=" + credit
+				+ ", referralUser=" + referralUser + ", roles=" + roles + "]");
 	}
+
 }

@@ -1,21 +1,22 @@
 package com.itbulls.cunha.dto;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Entity(name = "user")
-public class UserDTO implements Serializable  {
+public class UserDTO implements Serializable {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +27,7 @@ public class UserDTO implements Serializable  {
 
 	@Column(name = "last_name")
 	private String last_name;
-	
+
 	@Column(name = "email")
 	private String email;
 
@@ -38,18 +39,20 @@ public class UserDTO implements Serializable  {
 
 	@Column(name = "partner_code")
 	private String partnerCode;
+	@Column(name = "enabled")
+	private boolean isEnabled;
 
 	@Column(name = "credit")
 	private Double credit;
 
-    @ManyToOne
-    @JoinColumn(name = "user_role_id")
-    private RoleDTO roleDTO;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private Set<RoleDTO> roles;
 
-    @ManyToOne
-    @JoinColumn(name = "referral_user")
-    private UserDTO referralUser;
-    
+	@ManyToOne
+	@JoinColumn(name = "referral_user")
+	private UserDTO referralUser;
+
 	public int getId() {
 		return id;
 	}
@@ -114,12 +117,12 @@ public class UserDTO implements Serializable  {
 		this.credit_card_number = creditCardNumber;
 	}
 
-	public RoleDTO getRoleDTO() {
-		return roleDTO;
+	public Set<RoleDTO> getRoleDTO() {
+		return roles;
 	}
 
-	public void setRoleDTO(RoleDTO roleDTO) {
-		this.roleDTO = roleDTO;
+	public void setRoleDTO(Set<RoleDTO> roleDTO) {
+		this.roles = roleDTO;
 	}
 
 	public String getPartnerCode() {
@@ -146,11 +149,19 @@ public class UserDTO implements Serializable  {
 		this.credit = credit;
 	}
 
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
 	@Override
 	public String toString() {
 		return "UserDTO [id=" + id + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email
 				+ ", password=" + password + ", credit_card_number=" + credit_card_number + ", partnerCode="
-				+ partnerCode + ", credit=" + credit + ", roleDTO=" + roleDTO + ", referralUser=" + referralUser + "]";
+				+ partnerCode + ", credit=" + credit + ", roleDTO=" + roles + ", referralUser=" + referralUser + "]";
 	}
 
 }

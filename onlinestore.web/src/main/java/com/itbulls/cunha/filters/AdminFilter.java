@@ -1,6 +1,7 @@
 package com.itbulls.cunha.filters;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 import com.itbulls.cunha.entities.User;
 
@@ -22,7 +23,7 @@ public class AdminFilter extends HttpFilter implements Filter {
 			throws IOException, ServletException {
 		User user = (User)((HttpServletRequest)request).getSession().getAttribute("user");
 		if (user != null) {
-			if (user.getRole().getRoleName().equals("ROLE_ADMIN")) {
+			if (user.getRoles().stream().map(role -> role.getRoleName()).collect(Collectors.toList()).contains("ROLE_ADMIN")) {
 				chain.doFilter(request, response);
 			} else {
 				((HttpServletResponse)response).sendError(403);

@@ -1,5 +1,8 @@
 package com.itbulls.cunha.entities;
 
+import java.util.List;
+import java.util.Set;
+
 public interface User {
 	
 	String getFirstName();
@@ -8,10 +11,10 @@ public interface User {
 	String getEmail();
 	String getCredit_card_number();
 	String getPartnerCode();
-	Role getRole();
+	Set<Role> getRoles();
 	User getReferralUser();
 	int getId();
-	double getCredit();
+	Double getCredit();
 	
 	void setPassword(String newPassword);
 	void setEmail(String newEmail);
@@ -19,8 +22,9 @@ public interface User {
 	void setLastName(String lastName);
 	void setCredit_card_number(String credit_card_number);
 	void setPartnerCode(String partnerCode);
-	void setCredit(double credit);
+	void setCredit(Double credit);
 	
 	void printUserWithoutPassword();
 	void setReferralUser(User convertUserDtoToUser);
+	boolean isEnabled();
 }

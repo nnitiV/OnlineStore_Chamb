@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.itbulls.cunha.dao.OrderDAO;
-import com.itbulls.cunha.dao.impl.MySqlJdbcOrderDao;
+import com.itbulls.cunha.dao.impl.JpaOrderDao;
 import com.itbulls.cunha.dto.converters.OrderDtoToOrderConverter;
 import com.itbulls.cunha.entities.Order;
 import com.itbulls.cunha.services.OrderManagementService;
@@ -22,7 +22,7 @@ public class DefaultOrderManagementService implements OrderManagementService {
 
 	{
 		orders = new ArrayList<>();
-		orderDAO = new MySqlJdbcOrderDao();
+		orderDAO = new JpaOrderDao();
 		orderConverter = new OrderDtoToOrderConverter();
 	}
 

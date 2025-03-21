@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.itbulls.cunha.entities.impl.DefaultUser;
 import com.itbulls.cunha.facades.UserFacade;
-import com.itbulls.cunha.utils.PasswordEncryptionService;
 
 @Controller
 @RequestMapping("/signup")
@@ -31,9 +31,9 @@ public class SignUpController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SignUpController.class);
 	@Autowired
-	private PasswordEncryptionService passwordEncryptionService;
-	@Autowired
 	private UserFacade userFacade;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@GetMapping
 	public String doGet(Model model, HttpSession session) {
@@ -66,7 +66,7 @@ public class SignUpController {
 				e.printStackTrace();
 			}
 
-			user.setPassword(passwordEncryptionService.generatePasswordWithSaltAndHash(user.getPassword()));
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			userFacade.saveUser(user, referrerUserCode);
 			LOGGER.info("User with email {} is registered succesfully", user.getEmail());
 			return "redirect:login";

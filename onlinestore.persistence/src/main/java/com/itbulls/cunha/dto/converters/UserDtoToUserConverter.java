@@ -23,7 +23,7 @@ public class UserDtoToUserConverter {
 
 		User user = new DefaultUser(userDto.getId(), userDto.getFirstName(), userDto.getLastName(),
 				userDto.getPassword(), userDto.getEmail(), userDto.getCreditCardNumber(),
-				roleConverter.convertRoleDtoToRole(userDto.getRoleDTO()), userDto.getPartnerCode(),
+				roleConverter.converListRoleDtoToListRole(userDto.getRoleDTO()), userDto.getPartnerCode(),
 				convertUserDtoToUser(userDto.getReferralUser()), userDto.getCredit());
 		return user;
 	}
@@ -37,7 +37,7 @@ public class UserDtoToUserConverter {
 			userDto.setEmail(user.getEmail());
 			userDto.setPassword(user.getPassword());
 			userDto.setCreditCardNumber(user.getCredit_card_number());
-			userDto.setRoleDTO(roleConverter.convertRoleToRoleDto(user.getRole()));
+			userDto.setRoleDTO(roleConverter.convertListRoleToListRoleDto(user.getRoles()));
 			userDto.setPartnerCode(user.getPartnerCode());
 			userDto.setReferralUser(convertUserToUserDto(user.getReferralUser()));
 			userDto.setCredit(user.getCredit());

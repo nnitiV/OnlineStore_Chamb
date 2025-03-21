@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.itbulls.cunha.dao.UserDAO;
-import com.itbulls.cunha.dao.impl.MySqlJdbcUserDao;
+import com.itbulls.cunha.dao.impl.JpaUserDao;
 import com.itbulls.cunha.dto.UserDTO;
 import com.itbulls.cunha.dto.converters.UserDtoToUserConverter;
 import com.itbulls.cunha.entities.User;
@@ -28,7 +28,7 @@ public class DefaultUserManagementService implements UserManagementService {
 
 	{
 		registeredUsers = new ArrayList<>();
-		userDAO = new MySqlJdbcUserDao();
+		userDAO = new JpaUserDao();
 		userConverter = new UserDtoToUserConverter();
 	}
 

@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.itbulls.cunha.dao.ProductDAO;
-import com.itbulls.cunha.dao.impl.MySqlJdbcProductDao;
+import com.itbulls.cunha.dao.impl.JpaProductDao;
 import com.itbulls.cunha.dto.converters.ProductDtoToProductConverter;
 import com.itbulls.cunha.entities.Product;
 import com.itbulls.cunha.entities.impl.DefaultProduct;
@@ -24,7 +24,7 @@ public class DefaultProductManagementService implements ProductManagementService
 	private ProductDtoToProductConverter productConverter;
 
 	{
-		productDAO = new MySqlJdbcProductDao();
+		productDAO = new JpaProductDao();
 		productConverter = new ProductDtoToProductConverter();
 	}
 	

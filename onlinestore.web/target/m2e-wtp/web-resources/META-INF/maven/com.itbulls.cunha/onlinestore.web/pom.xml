@@ -12,6 +12,7 @@
   
   <properties>
      <spring.version>5.3.23</spring.version>
+     <spring.security.version>5.8.1</spring.security.version>
   </properties>
   
   <dependencies>
@@ -20,6 +21,7 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-jsp-api</artifactId>
@@ -52,10 +54,29 @@
 			<version>${spring.version}</version>
 		</dependency>
 		
+		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.itbulls.cunha</groupId>
 			<artifactId>onlinestore.persistence</artifactId>
-			<version>${project.version}</version>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.itbulls.cunha</groupId>
@@ -82,7 +103,6 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
         <configuration>
           <release>15</release>
         </configuration>

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.itbulls.cunha.dao.impl.MySqlJdbcCategoryDao;
+import com.itbulls.cunha.dao.impl.JpaCategoryDao;
 import com.itbulls.cunha.dto.CategoryDTO;
 import com.itbulls.cunha.entities.Category;
 import com.itbulls.cunha.entities.impl.DefaultCategory;
@@ -15,7 +15,7 @@ public class CategoryDtoToCategoryConverter {
 
 	public CategoryDTO convertCategoryToCategoryDto(String categoryName) {
 		CategoryDTO categoryDTO = new CategoryDTO();
-		categoryDTO.setId(new MySqlJdbcCategoryDao().getCategoryByName(categoryName).getId());
+		categoryDTO.setId(new JpaCategoryDao().getCategoryByName(categoryName).getId());
 		categoryDTO.setCategoryName(categoryName);
 		return categoryDTO;
 	}
