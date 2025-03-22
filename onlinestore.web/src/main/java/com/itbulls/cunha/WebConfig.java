@@ -1,14 +1,26 @@
 package com.itbulls.cunha;
 
+import java.util.Properties;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
+import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +29,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,8 +50,12 @@ import com.itbulls.cunha.security.DefaultUserDetailsService;
 
 @EnableWebMvc
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Configuration
 @ComponentScan(basePackages = { "com.itbulls.cunha" })
+@EnableTransactionManagement
+@EnableJpaRepositories("com.itbulls.cunha.persistence.repositories")
+@PropertySource("classpath:database.properties")
 public class WebConfig implements WebMvcConfigurer {
 
 	@Bean
@@ -128,5 +145,51 @@ public class WebConfig implements WebMvcConfigurer {
 				.getSharedObject(AuthenticationManagerBuilder.class);
 		authenticationManagerBuilder.authenticationProvider(authProvider());
 		return authenticationManagerBuilder.build();
+	}
+
+	// Spring Data - Configuration
+
+	private static final String PROPERTY_DRIVER = "driver";
+	private static final String PROPERTY_URL = "url";
+	private static final String PROPERTY_USERNAME = "user";
+	private static final String PROPERTY_PASSWORD = "password";
+	private static final String PROPERTY_DIALECT = "hibernate.dialect";
+	private static final String PROPERTY_SHOW_SQL = "hibernate.show_sql";
+
+	@Autowired
+	private Environment environment;
+
+	@Bean
+	public DataSource dataSource() {
+		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+		driverManagerDataSource.setUrl(environment.getProperty(PROPERTY_URL));
+		driverManagerDataSource.setUsername(environment.getProperty(PROPERTY_USERNAME));
+		driverManagerDataSource.setPassword(environment.getProperty(PROPERTY_PASSWORD));
+		driverManagerDataSource.setDriverClassName(environment.getProperty(PROPERTY_DRIVER));
+		return driverManagerDataSource;
+	}
+
+	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+		LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+		localContainerEntityManagerFactoryBean.setDataSource(dataSource());
+		localContainerEntityManagerFactoryBean.setPackagesToScan("com.itbulls.cunha.persistence.entities");
+		localContainerEntityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+		localContainerEntityManagerFactoryBean.setJpaProperties(hibernateProps());
+		return localContainerEntityManagerFactoryBean;
+	}
+
+	private Properties hibernateProps() {
+		Properties properties = new Properties();
+		properties.setProperty(PROPERTY_DIALECT, environment.getProperty(PROPERTY_DIALECT));
+		properties.setProperty(PROPERTY_SHOW_SQL, environment.getProperty(PROPERTY_SHOW_SQL));
+		return properties;
+	}
+
+	@Bean
+	public JpaTransactionManager transactionManager() {
+		JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
+		jpaTransactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+		return jpaTransactionManager;
 	}
 }

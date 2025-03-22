@@ -27,18 +27,20 @@ public class RememberMeFilter implements Filter {
 
 	private UserFacade userFacade;
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpSession session = ((HttpServletRequest)request).getSession();
-		
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		HttpSession session = ((HttpServletRequest) request).getSession();
+
 		if (session.getAttribute(DefaultAuthenticationSuccessHandler.LOGGED_IN_USER_ATTR) == null) {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			System.out.println("Authentication: " + authentication);
-			
-			if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			    User user = userFacade.getUserByEmail(authentication.getName());
-			    if (user != null) {
-			    	session.setAttribute(DefaultAuthenticationSuccessHandler.LOGGED_IN_USER_ATTR, user);
-			    }
+			if (authentication != null) {
+				if (!(authentication instanceof AnonymousAuthenticationToken)) {
+					User user = userFacade.getUserByEmail(authentication.getName());
+					if (user != null) {
+						session.setAttribute(DefaultAuthenticationSuccessHandler.LOGGED_IN_USER_ATTR, user);
+					}
+				}
 			}
 		}
 		chain.doFilter(request, response);
@@ -46,9 +48,9 @@ public class RememberMeFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		 ApplicationContext ctx = WebApplicationContextUtils
-			      .getRequiredWebApplicationContext(filterConfig.getServletContext());
-		 this.userFacade = ctx.getBean(UserFacade.class);
+		ApplicationContext ctx = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(filterConfig.getServletContext());
+		this.userFacade = ctx.getBean(UserFacade.class);
 	}
 
 	@Override
