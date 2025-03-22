@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="shop" tagdir="/WEB-INF/tags/shop/"%>
 <!DOCTYPE html>
@@ -73,8 +74,8 @@
 													<td>${user.credit}</td>
 												</tr>
 												<tr>
-													<th>Role:</th>
-													<td>${user.role.roleName}</td>
+													<th>Roles:</th>
+													<td>${user.roles}</td>
 												</tr>
 												<tr>
 													<th>Partner Code:</th>

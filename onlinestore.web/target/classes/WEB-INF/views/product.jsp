@@ -16,14 +16,14 @@
 			<div id="product-desc">
 				<h2>${product.productName}</h2>
 				<img style="width: 250px; height: 250px;"
-					src="images/product/${product.productCategoryName}.jpg" alt="" />
+					src="images/product/${product.category.categoryName}.jpg" alt="" />
 			</div>
 			<div id="product-action">
 				<div class="description">
 					<p>This is a good laptop.</p>
 				</div>
 				<div class="price">$${product.price}</div>
-				<form action="./product" method="POST">
+				<form action="product" method="POST">
 					<input type="hidden" name="product_guid" value="${product.guid}">
 					<button type="submit" class="buy-button">Buy</button>
 				</form>

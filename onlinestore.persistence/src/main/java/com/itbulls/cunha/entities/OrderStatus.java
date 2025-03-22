@@ -2,7 +2,7 @@ package com.itbulls.cunha.entities;
 
 public enum OrderStatus {
 	RECEIVE_REQUEST, WAITING_FOR_PAYEMENT, PAYED, SHIPPING, SHIPPED, COMPLETED;
-
+	
 	public OrderStatus next() {
 		switch (this) {
 		case RECEIVE_REQUEST:

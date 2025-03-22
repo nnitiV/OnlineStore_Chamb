@@ -30,7 +30,7 @@
 			<h1>
 				<fmt:message key="sign.up" bundle="${resourceBundle}" />
 			</h1>
-			<form:form action="signup" modelAttribute="userSignUp" method="POST">
+			<form:form action="${pageContext.request.contextPath}/signup" modelAttribute="userSignUp" method="POST">
 				<div class="form-group">
 					<label for="firstName"> <fmt:message key="first.name"
 							bundle="${resourceBundle}" />

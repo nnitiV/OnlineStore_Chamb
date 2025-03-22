@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -104,7 +105,7 @@
             <div class="row">
                <div class="col-md-5 col-sm-6 col-xs-12">
                   <div class="left-works-box wow fadeIn" data-wow-delay="0.2s">
-                     <h2>How it works if <br><span>you’re a buyer.</span></h2>
+                     <h2>How it works if <br><span>youâre a buyer.</span></h2>
                      <p>We explained the buying proces of Chamb in
                         three simple steps. See how it works,
                         benefits and FAQ.
@@ -418,7 +419,7 @@
                               </h4>
                            </div>
                            <div id="faq-right-c" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-faq-right-3">
-                              <div class="panel-body">When creating an account, our ‘guided tour’ tutorial system will walk you through every aspect of the account generation process. From filling in your name to posting your first product or searching for your first item; nothing is left to chance </div>
+                              <div class="panel-body">When creating an account, our âguided tourâ tutorial system will walk you through every aspect of the account generation process. From filling in your name to posting your first product or searching for your first item; nothing is left to chance </div>
                            </div>
                         </div>
                         <div class="panel panel-default">
@@ -528,7 +529,7 @@
             <div class="container">
                <div class="row">
                   <div class="col-md-8">
-                     <p><img width="90" src="images/logo.png" alt="#" style="margin-top: -5px;" /> All Rights Reserved. Company Name © 2018</p>
+                     <p><img width="90" src="images/logo.png" alt="#" style="margin-top: -5px;" /> All Rights Reserved. Company Name Â© 2018</p>
                   </div>
                   <div class="col-md-4">
                      <ul class="list-inline socials">

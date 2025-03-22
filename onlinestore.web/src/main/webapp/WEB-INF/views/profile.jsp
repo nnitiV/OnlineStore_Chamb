@@ -1,4 +1,4 @@
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="shop" tagdir="/WEB-INF/tags/shop/"%>
 <!DOCTYPE html>
@@ -74,8 +74,10 @@
 													<td>${user.credit}</td>
 												</tr>
 												<tr>
-													<th>Role:</th>
-													<td>${user.role.roleName}</td>
+													<th>Roles:</th>
+													<td><c:forEach items="${user.roles}" var="role">
+														${role.roleName} | 
+													</c:forEach></td>
 												</tr>
 												<tr>
 													<th>Partner Code:</th>
@@ -122,16 +124,9 @@
 															</tbody>
 														</c:otherwise>
 													</c:choose>
+												</c:when>
+											</c:choose>
 										</table>
-										<!-- If all orders are completed, show "No orders at the moment!" -->
-										<c:if test="${allCompleted}">
-											<p>No orders at the moment!</p>
-										</c:if>
-										</c:when>
-										<c:otherwise>
-											<p>No orders at the moment!</p>
-										</c:otherwise>
-										</c:choose>
 									</div>
 								</div>
 							</div>

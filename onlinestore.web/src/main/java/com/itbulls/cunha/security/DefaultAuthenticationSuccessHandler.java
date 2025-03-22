@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 import com.itbulls.cunha.SetupDataLoader;
 import com.itbulls.cunha.entities.User;
-import com.itbulls.cunha.facades.UserFacade;
+import com.itbulls.cunha.services.UserService;
 
 public class DefaultAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
@@ -24,12 +24,12 @@ public class DefaultAuthenticationSuccessHandler implements AuthenticationSucces
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultAuthenticationSuccessHandler.class);
 	
 	@Autowired
-	private UserFacade userFacade;
+	private UserService userService;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		User user = userFacade.getUserByEmail(authentication.getName());
+		User user = userService.getUserByEmail(authentication.getName());
 		HttpSession session = request.getSession();
 		String contextPath = request.getServletContext().getContextPath();
 		LOGGER.info("Session is requested");

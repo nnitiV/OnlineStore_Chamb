@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -75,7 +76,7 @@
                         </p>
                      </div>
                      <div class="bot-box">
-                        <p>All Rights Reserved. Company Name © 2018 | contact@Chamb.com</p>
+                        <p>All Rights Reserved. Company Name Â© 2018 | contact@Chamb.com</p>
 
                      </div>
                   </div>

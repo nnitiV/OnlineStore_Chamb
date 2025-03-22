@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.itbulls.cunha.entities.impl.DefaultUser;
-import com.itbulls.cunha.facades.UserFacade;
+import com.itbulls.cunha.entities.User;
+import com.itbulls.cunha.services.UserService;
 
 @Controller
 @RequestMapping("/signup")
@@ -31,7 +31,7 @@ public class SignUpController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SignUpController.class);
 	@Autowired
-	private UserFacade userFacade;
+	private UserService userService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -41,12 +41,12 @@ public class SignUpController {
 			model.addAttribute("error", session.getAttribute("error"));
 			session.removeAttribute("error");
 		}
-		model.addAttribute("userSignUp", new DefaultUser());
+		model.addAttribute("userSignUp", new User());
 		return "signup";
 	}
 
 	@PostMapping
-	public String doPost(@Valid @ModelAttribute("userSignUp") DefaultUser user, BindingResult bindingResult,
+	public String doPost(@Valid @ModelAttribute("userSignUp") User user, BindingResult bindingResult,
 			HttpSession session, @CookieValue(value = "partner_code", defaultValue = "") String referrerUserCode) {
 		LOGGER.info("Request to sign up user.");
 		if (bindingResult.hasErrors()) {
@@ -67,7 +67,8 @@ public class SignUpController {
 			}
 
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			userFacade.saveUser(user, referrerUserCode);
+			user.setReferralUser(userService.getUserByPartnerCode(referrerUserCode));
+			userService.addUser(user);
 			LOGGER.info("User with email {} is registered succesfully", user.getEmail());
 			return "redirect:login";
 		}

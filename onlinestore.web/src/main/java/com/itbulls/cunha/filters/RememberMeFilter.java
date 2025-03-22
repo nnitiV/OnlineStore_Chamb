@@ -19,13 +19,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.itbulls.cunha.entities.User;
-import com.itbulls.cunha.facades.UserFacade;
+import com.itbulls.cunha.repositories.UserJpaRepository;
 import com.itbulls.cunha.security.DefaultAuthenticationSuccessHandler;
+import com.itbulls.cunha.services.UserService;
 
 @WebFilter("/*")
 public class RememberMeFilter implements Filter {
 
-	private UserFacade userFacade;
+	private UserService userService;
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -36,7 +37,7 @@ public class RememberMeFilter implements Filter {
 			System.out.println("Authentication: " + authentication);
 			if (authentication != null) {
 				if (!(authentication instanceof AnonymousAuthenticationToken)) {
-					User user = userFacade.getUserByEmail(authentication.getName());
+					User user = userService.getUserByEmail(authentication.getName());
 					if (user != null) {
 						session.setAttribute(DefaultAuthenticationSuccessHandler.LOGGED_IN_USER_ATTR, user);
 					}
@@ -50,7 +51,7 @@ public class RememberMeFilter implements Filter {
 	public void init(FilterConfig filterConfig) throws ServletException {
 		ApplicationContext ctx = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(filterConfig.getServletContext());
-		this.userFacade = ctx.getBean(UserFacade.class);
+		this.userService = ctx.getBean(UserService.class);
 	}
 
 	@Override

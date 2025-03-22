@@ -1,5 +1,7 @@
 package com.itbulls.cunha.controllers;
 
+import java.util.Arrays;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,41 +11,43 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.itbulls.cunha.entities.Order;
+import com.itbulls.cunha.entities.OrderStatus;
 import com.itbulls.cunha.entities.Product;
 import com.itbulls.cunha.entities.User;
-import com.itbulls.cunha.entities.impl.DefaultProduct;
-import com.itbulls.cunha.entities.impl.DefaultUser;
-import com.itbulls.cunha.facades.OrderFacade;
-import com.itbulls.cunha.facades.ProductFacade;
+import com.itbulls.cunha.services.OrderService;
+import com.itbulls.cunha.services.ProductService;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
 
 	@Autowired
-	private ProductFacade productFacade;
+	private ProductService productService;
 	@Autowired
-	private OrderFacade orderFacade;
+	private OrderService orderService;
 	private static final String SUCCESFULLY_SAVED_ORDER_TEXT = "Order is created and a manager will contact you soon!";
-	
+
 	@GetMapping
 	public String doGet(HttpSession session, @RequestParam String product_guid) {
-		session.setAttribute("product",
-				productFacade.getProductByGuid(product_guid));
+		session.setAttribute("product", productService.getProductByGuid(product_guid));
 		return "product";
 	}
-	
+
 	@PostMapping
 	public String doPost(HttpSession session, @RequestParam String product_guid) {
 		User user = (User) session.getAttribute("user");
-		Product productToSave = productFacade.getProductByGuid(product_guid);
-
+		Product productToSave = productService.getProductByGuid(product_guid);
+		Order order = new Order();
 		if (user == null) {
 			return "login";
 		}
-		orderFacade.saveOrder(productToSave, user);
+		order.setUser(user);
+		order.setProducts(Arrays.asList(productToSave));
+		order.setOrderStatus(OrderStatus.RECEIVE_REQUEST);
+		orderService.addOrder(order);
 		session.setAttribute("succesfully_added_order_text", SUCCESFULLY_SAVED_ORDER_TEXT);
-		return "product";
+		return "redirect:product?product_guid="+product_guid;
 	}
-	
+
 }

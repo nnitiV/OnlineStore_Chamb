@@ -17,18 +17,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import com.itbulls.cunha.entities.Privilege;
 import com.itbulls.cunha.entities.Role;
 import com.itbulls.cunha.entities.User;
-import com.itbulls.cunha.facades.UserFacade;
+import com.itbulls.cunha.services.UserService;
 
 @Transactional
 public class DefaultUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private UserFacade userFacade;
+	private UserService userService;
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		System.out.println("Loading user by email: " + email);
-		User user = userFacade.getUserByEmail(email);
+		User user = userService.getUserByEmail(email);
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found with email: " + email);
 		}

@@ -54,7 +54,7 @@ import com.itbulls.cunha.security.DefaultUserDetailsService;
 @Configuration
 @ComponentScan(basePackages = { "com.itbulls.cunha" })
 @EnableTransactionManagement
-@EnableJpaRepositories("com.itbulls.cunha.persistence.repositories")
+@EnableJpaRepositories("com.itbulls.cunha.repositories")
 @PropertySource("classpath:database.properties")
 public class WebConfig implements WebMvcConfigurer {
 
@@ -173,7 +173,7 @@ public class WebConfig implements WebMvcConfigurer {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		localContainerEntityManagerFactoryBean.setDataSource(dataSource());
-		localContainerEntityManagerFactoryBean.setPackagesToScan("com.itbulls.cunha.persistence.entities");
+		localContainerEntityManagerFactoryBean.setPackagesToScan("com.itbulls.cunha.entities");
 		localContainerEntityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
 		localContainerEntityManagerFactoryBean.setJpaProperties(hibernateProps());
 		return localContainerEntityManagerFactoryBean;

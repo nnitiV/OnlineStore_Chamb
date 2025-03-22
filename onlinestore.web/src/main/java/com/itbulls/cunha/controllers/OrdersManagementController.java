@@ -9,17 +9,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.itbulls.cunha.entities.Order;
-import com.itbulls.cunha.facades.OrderFacade;
+import com.itbulls.cunha.services.OrderService;
 
 @Controller
 public class OrdersManagementController {
 
 	@Autowired
-	private OrderFacade orderFacade;
+	private OrderService orderService;
 
 	@RequestMapping("/orders-management")
 	public String ordersManagement(HttpSession session) {
-		List<Order> orders = orderFacade.getAllOrders();
+		List<Order> orders = orderService.getAllOrders();
 		session.setAttribute("orders", orders);
 		return "ordersManagement";
 	}

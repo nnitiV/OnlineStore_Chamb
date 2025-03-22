@@ -1,11 +1,13 @@
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="shop" tagdir="/WEB-INF/tags/shop/"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!-- Retrieve the locale from the session -->
 <c:set var="userLocale" value="${sessionScope.userLocale}" />
 <c:if test="${empty userLocale}">
-    <c:set var="userLocale" value="${pageContext.request.locale}" />
+	<c:set var="userLocale" value="${pageContext.request.locale}" />
 </c:if>
 
 <!-- Set the ResourceBundle using the user's locale -->
@@ -25,35 +27,65 @@
 	<shop:header />
 	<div class="background">
 		<div class="container_signup">
-			<h1><fmt:message key="sign.up" bundle="${resourceBundle}"/></h1>
-			<form action="./signup" method="POST">
+			<h1>
+				<fmt:message key="sign.up" bundle="${resourceBundle}" />
+			</h1>
+			<form:form action="${pageContext.request.contextPath}/signup" modelAttribute="userSignUp" method="POST">
 				<div class="form-group">
-					<label for="firstName"><fmt:message key="first.name" bundle="${resourceBundle}"/></label> <input type="text"
-						id="firstName" name="firstName" required>
+					<label for="firstName"> <fmt:message key="first.name"
+							bundle="${resourceBundle}" />
+					</label>
+					<form:input path="firstName" id="firstName"
+						required="true" />
+					<form:errors path="firstName" cssClass="error" />
 				</div>
+
 				<div class="form-group">
-					<label for="lastName"><fmt:message key="last.name" bundle="${resourceBundle}"/></label> <input type="text"
-						id="lastName" name="lastName" required>
+					<label for="lastName"> <fmt:message key="last.name"
+							bundle="${resourceBundle}" />
+					</label>
+					<form:input path="lastName" id="lastName"
+						required="true" />
+					<form:errors path="lastName" cssClass="error" />
 				</div>
+
 				<div class="form-group">
-					<label for="email"><fmt:message key="email" bundle="${resourceBundle}"/></label> <input type="email" id="email"
-						name="email" required>
+					<label for="email"> <fmt:message key="email"
+							bundle="${resourceBundle}" />
+					</label>
+					<form:input path="email" id="email" required="true" />
+					<form:errors path="email" cssClass="error" />
 				</div>
+
 				<div class="form-group">
-					<label for="password"><fmt:message key="password" bundle="${resourceBundle}"/></label> <input type="password"
-						id="password" name="password" required>
+					<label for="password"> <fmt:message key="password"
+							bundle="${resourceBundle}" />
+					</label>
+					<form:password path="password" id="password" required="true" />
+					<form:errors path="password" cssClass="error" />
 				</div>
+
 				<div class="form-group">
-					<label for="repeatPassword"><fmt:message key="repeat.password" bundle="${resourceBundle}"/></label> <input
-						type="password" id="repeatPassword" name="repeatPassword" required>
+					<label for="repeatPassword"> <fmt:message
+							key="repeat.password" bundle="${resourceBundle}" />
+					</label>
+					<form:password path="repeatPassword" id="repeatPassword"
+						required="true" />
+					<form:errors path="repeatPassword" cssClass="error" />
 				</div>
-				<button class="button_signup" type="submit"><fmt:message key="sign.up" bundle="${resourceBundle}"/></button>
-				<c:if test="${error != null }">
+
+				<button class="button_signup" type="submit">
+					<fmt:message key="sign.up" bundle="${resourceBundle}" />
+				</button>
+
+				<c:if test="${error != null}">
 					<p style="color: red">${error}</p>
 				</c:if>
-			</form>
+			</form:form>
 			<p class="login-link">
-				<fmt:message key="have.account" bundle="${resourceBundle}"/> <a href="login"><fmt:message key="sign.in" bundle="${resourceBundle}"/></a>
+				<fmt:message key="have.account" bundle="${resourceBundle}" />
+				<a href="login"><fmt:message key="sign.in"
+						bundle="${resourceBundle}" /></a>
 			</p>
 		</div>
 	</div>

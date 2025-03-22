@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="shop" tagdir="/WEB-INF/tags/shop"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <!-- Retrieve the locale from the session -->
 <c:set var="userLocale" value="${sessionScope.userLocale}" />
 <c:if test="${empty userLocale}">
@@ -95,7 +95,7 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<img src="images/xpann-icon.jpg" class="icon-small" alt="">
-							<h4>Chamb€ Your Business</h4>
+							<h4>ChambÂ€ Your Business</h4>
 							<p>Grow easily with chamb. Create free account. We help
 								expanding your business easily.</p>
 						</div>

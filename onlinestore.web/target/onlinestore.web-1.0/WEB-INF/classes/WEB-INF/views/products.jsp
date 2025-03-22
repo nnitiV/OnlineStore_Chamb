@@ -26,9 +26,9 @@
 			<div class="products-container">
 				<c:forEach items="${products}" var="product">
 					<div id="product">
-						<img src="images/product/${product.productCategoryName}.jpg" />
+						<img src="images/product/${product.category.categoryName}.jpg" />
 						<div class="product">
-							<h3>${product.productName}</h3>
+							<h3>${product.productName}}</h3>
 							<p class="price">$${product.price}</p>
 							<a href="./product?product_guid=${product.guid}" class="view-button">View</a>
 						</div>
