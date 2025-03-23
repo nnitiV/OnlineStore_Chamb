@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -191,5 +193,17 @@ public class WebConfig implements WebMvcConfigurer {
 		JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
 		jpaTransactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
 		return jpaTransactionManager;
+	}
+	
+	
+	// In case you want to use Spring JDBC
+	@Bean
+	public JdbcTemplate jdbcTemplate() {
+		return new JdbcTemplate(dataSource());
+	}
+	
+	@Bean
+	public NamedParameterJdbcTemplate namedParameterJdbcTemplate() {
+		return new NamedParameterJdbcTemplate(dataSource());
 	}
 }

@@ -10,11 +10,20 @@
   <artifactId>onlinestore.core</artifactId>
   <packaging>jar</packaging>
 
+   <properties>
+     <spring.version>5.3.23</spring.version>
+   </properties>
+
   <dependencies>
-  	<dependency>
-  		<groupId>com.itbulls.cunha</groupId>
-  		<artifactId>onlinestore.persistence</artifactId>
-  		<version>${project.version}</version>
-  	</dependency>
+	  	<dependency>
+	  		<groupId>com.itbulls.cunha</groupId>
+	  		<artifactId>onlinestore.persistence</artifactId>
+	  		<version>${project.version}</version>
+	  	</dependency>
+	  	<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
   </dependencies>
 </project>

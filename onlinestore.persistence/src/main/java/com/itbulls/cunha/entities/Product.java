@@ -40,14 +40,6 @@ public class Product  {
 		this.id = id;
 	}
 
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
 	public BigDecimal getPrice() {
 		return productPrice;
 	}
@@ -64,11 +56,11 @@ public class Product  {
 		this.category = category;
 	}
 
-	public String getProduct_name() {
+	public String getProductName() {
 		return productName;
 	}
 
-	public void setProduct_name(String product_name) {
+	public void setProductName(String product_name) {
 		this.productName = product_name;
 	}
 

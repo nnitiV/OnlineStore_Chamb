@@ -7,4 +7,5 @@ import com.itbulls.cunha.entities.Order;
 
 @Repository
 public interface OrderJpaRepository extends CrudRepository<Order, Long> {
+	
 }
