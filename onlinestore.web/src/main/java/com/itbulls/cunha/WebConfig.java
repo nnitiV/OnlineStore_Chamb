@@ -117,7 +117,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeHttpRequests().requestMatchers("/orders-management", "/updateOrderStatus")
-				.hasAnyRole(SetupDataLoader.WRITE_PRIVILEGE).requestMatchers("/admin/*").hasRole("ADMIN").anyRequest()
+				.hasAuthority(SetupDataLoader.WRITE_PRIVILEGE).requestMatchers("/admin/*").hasRole("ADMIN").anyRequest()
 				.permitAll().and().formLogin().loginPage("/login").usernameParameter("email").usernameParameter("email")
 				.loginProcessingUrl("/perform_login").successHandler(successAuthHandler())
 				.failureHandler(failureHandler()).and().logout().logoutUrl("/signout").deleteCookies("JSESSIONID")

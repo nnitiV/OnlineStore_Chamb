@@ -37,11 +37,11 @@
 							<c:if test="${order.orderStatus != 'COMPLETED'}">
 								<tbody>
 									<tr>
-										<td>${order.orderId}</td>
-										<td>${order.orderUser.email}</td>
+										<td>${order.id}</td>
+										<td>${order.user.email}</td>
 										<td>${order.orderStatus}</td>
 										<td><a
-											href="./updateOrderStatus?order_id=${order.orderId}"
+											href="./updateOrderStatus?order_id=${order.id}"
 											class="action-button">Mark fulfillment Stage as Completed</a></td>
 									</tr>
 								</tbody>

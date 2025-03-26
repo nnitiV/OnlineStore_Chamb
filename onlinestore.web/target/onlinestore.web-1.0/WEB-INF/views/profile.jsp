@@ -75,7 +75,9 @@
 												</tr>
 												<tr>
 													<th>Roles:</th>
-													<td>${user.roles}</td>
+													<td><c:forEach items="${user.roles}" var="role">
+														${role.roleName} | 
+													</c:forEach></td>
 												</tr>
 												<tr>
 													<th>Partner Code:</th>
@@ -122,16 +124,9 @@
 															</tbody>
 														</c:otherwise>
 													</c:choose>
+												</c:when>
+											</c:choose>
 										</table>
-										<!-- If all orders are completed, show "No orders at the moment!" -->
-										<c:if test="${allCompleted}">
-											<p>No orders at the moment!</p>
-										</c:if>
-										</c:when>
-										<c:otherwise>
-											<p>No orders at the moment!</p>
-										</c:otherwise>
-										</c:choose>
 									</div>
 								</div>
 							</div>
