@@ -11,4 +11,4 @@ Orders management:
 ![image](https://github.com/user-attachments/assets/d6f20369-eb7b-428e-905b-fe7f661b7b08)
 
 
-Tecnologias utilizadas: Java, Spring (MVC, Security, Data), MySQL, I18N & L10N, HTML, CSSt
+Tecnologias utilizadas: Java, Spring (MVC, Security, Data), MySQL, I18N & L10N, HTML, CSS
