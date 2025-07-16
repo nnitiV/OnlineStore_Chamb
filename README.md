@@ -1,6 +1,6 @@
 Chamb é um e-commerce fictício desenvolvido para simular um ambiente real de vendas online, com arquitetura modular e código limpo seguindo princípios SOLID. O projeto prioriza escalabilidade, boas práticas de desenvolvimento e uma experiência completa (do catálogo ao checkout), servindo como base para estudos ou adaptação em cenários
-comerciais.
-Ele possua funcionalidade para coisas básicas como login e cadastro de usuários, checkout de produtos, além de funcionalidades como gerenciamento de pedidos por usuários com Role de Manager ou Admin, e também funcionalidade para código de parceria e sistema de remember me.
+comerciais.<br/>
+Ele possua funcionalidade para coisas básicas como login e cadastro de usuários, checkout de produtos, além de funcionalidades como gerenciamento de pedidos por usuários com Role de Manager ou Admin, e também funcionalidade para código de parceria e sistema de remember me.<br/>
 Homepage:
 ![image](https://github.com/user-attachments/assets/ec92f289-58aa-44d6-90ae-8e41a7dda3e5)
 Login:
